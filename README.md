@@ -174,7 +174,7 @@ For detailed execution instructions and recommended workflows, see `README/READM
 
 The artifact is focused on:
 
-- deriving \(g_{\rm bar}\) and \(g_{\rm obs}\) from SPARC rotation curves,  
+- deriving galaxy-scale baryonic and observed radial accelerations (`g_bar` and `g_obs`) from SPARC rotation curves,  
 - fitting an empirical RAR model globally and within NMF-defined sub-populations of galaxies,
 - scanning a grid of NMF configurations and group-definition thresholds,
 - quantifying how often a small subgroup with a distinct RAR acceleration scale appears and how robust this subgroup is across configurations.
