@@ -31,14 +31,16 @@ Python scripts that construct the RAR inputs from SPARC, run NMF, and collect gr
 
 - `sparc_rar_nmf_robust.py`  
   End-to-end robustness scan over multiple NMF configurations (number of components, radial bin counts, random seeds, dominance thresholds).  
-  - Builds the normalized \(v_{\rm obs}^2(r/R_{\max})\) matrix.  
+  - Builds the normalized `v_obs^2(r/R_max)` matrix.  
   - Runs NMF for each configuration.  
   - Fits an empirical McGaugh-style RAR  
-    \[
-      g_{\rm obs} = \frac{g_{\rm bar}}{1 - \exp(-\sqrt{g_{\rm bar}/g^\dagger})}
-    \]  
+
+    ```text
+    g_obs = g_bar / (1 - exp(-sqrt(g_bar / g_dagger)))
+    ```  
+
     globally and per NMF-defined group.  
-  - Writes group-level RAR parameters (\(g^\dagger\), intrinsic scatter, sample sizes, residual statistics) to CSV files.
+  - Writes group-level RAR parameters (`g_dagger`, intrinsic scatter, sample sizes, residual statistics) to CSV files.
 
 - `sparc_rar_nmf_repro.py`  
   Compact script focusing on a single “baseline” configuration (3 components, 15 bins, fixed seed and dominance threshold).  
@@ -51,7 +53,7 @@ Python scripts that construct the RAR inputs from SPARC, run NMF, and collect gr
   Utility for building per-galaxy diagnostics and plots for the low-acceleration subgroup in the baseline configuration (`comp3_dom`), including RAR fits and metadata overlays.
 
 - `sparc_rar_nmf_inspect_comp3.py`  
-  Inspection tool that reads SPARC rotation curves for the `comp3_dom` galaxies and computes quantities such as \(R_{\max}\), \(V_{\max}\), and approximate gas fractions, writing the results to CSV files.
+  Inspection tool that reads SPARC rotation curves for the `comp3_dom` galaxies and computes quantities such as `R_max`, `V_max`, and approximate gas fractions, writing the results to CSV files.
 
 Additional helper scripts may be present for plotting or convenience; their roles are documented via comments in each file.
 
@@ -62,16 +64,16 @@ Additional helper scripts may be present for plotting or convenience; their role
 SPARC inputs used by the analysis:
 
 - `SPARC_Table1_full.csv`  
-  Galaxy-level SPARC metadata (morphological type, distance, inclination, 3.6µm luminosity, HI mass, \(V_{\rm flat}\), quality flag, and references) in CSV form, used for joins with the NMF/RAR outputs.
+  Galaxy-level SPARC metadata (morphological type, distance, inclination, 3.6µm luminosity, HI mass, `V_flat`, quality flag, and references) in CSV form, used for joins with the NMF/RAR outputs.
 
 - `SPARC_Rotmod/`  
   Subdirectory containing SPARC **Rotmod_LTG** rotation-curve files (`*_rotmod.dat`).  
-  Each file provides radius, observed circular velocity, errors, and baryonic components (gas, disk, bulge) used to build the normalized \(v_{\rm obs}^2(r/R_{\max})\) profiles.
+  Each file provides radius, observed circular velocity, errors, and baryonic components (gas, disk, bulge) used to build the normalized `v_obs^2(r/R_max)` profiles.
 
 - `SPARC_Lelli2016c_from_web.txt`  
   ASCII copy of the original SPARC Table 1 as obtained from the public source, kept as a reference for the CSV conversion.
 
-The analysis uses these inputs to derive \(g_{\rm bar}\) and \(g_{\rm obs}\) for each galaxy and radial point.
+The analysis uses these inputs to derive `g_bar` and `g_obs` for each galaxy and radial point.
 
 ---
 
@@ -83,12 +85,12 @@ Derived tables, summaries, and figures from the robustness experiment:
   - `sparc_rar_nmf_robust_groups.csv`  
     For each NMF configuration (number of components, bins, random seed, dominance threshold) and for each group (`comp1_dom`, `comp2_dom`, `comp3_dom`, `mixed`, `all`), this file stores:  
     - number of galaxies and points,  
-    - best-fitting \(g^\dagger\) and its 1σ interval,  
+    - best-fitting `g_dagger` and its 1σ interval,  
     - intrinsic scatter in log10 space,  
     - residual summary statistics.
 
   - `sparc_rar_nmf_robust_pairs.csv`  
-    For each configuration, records whether the 1σ confidence intervals in \(g^\dagger\) are non-overlapping between pairs of groups. This is used to flag configurations where a group prefers a statistically distinct acceleration scale.
+    For each configuration, records whether the 1σ confidence intervals in `g_dagger` are non-overlapping between pairs of groups. This is used to flag configurations where a group prefers a statistically distinct acceleration scale.
 
 - **Baseline configuration outputs (k = 3 components)**  
   These files correspond to a baseline NMF setup (3 components, fixed binning and dominance threshold) and are intended for direct use in a manuscript:
@@ -103,13 +105,13 @@ Derived tables, summaries, and figures from the robustness experiment:
     Compact table of group-level RAR parameters and mean SPARC metadata, prepared for inclusion in a paper.
 
   - `sparc_rar_nmf_baseline_group_metadata_summary.csv`  
-    Summary of mean distance, inclination, luminosity, HI mass, and \(V_{\rm flat}\) for each group.
+    Summary of mean distance, inclination, luminosity, HI mass, and `V_flat` for each group.
 
   - `sparc_rar_nmf_baseline_comp3_galaxies.txt`  
     List of galaxies assigned to the low-acceleration subgroup (`comp3_dom`) in the baseline configuration.
 
   - `sparc_rar_nmf_baseline_comp3_galaxies_diagnostics.csv`  
-    Basic structural diagnostics for the `comp3_dom` galaxies (e.g. \(R_{\max}\), \(V_{\max}\), gas-fraction proxy, NMF mixture fractions).
+    Basic structural diagnostics for the `comp3_dom` galaxies (e.g. `R_max`, `V_max`, gas-fraction proxy, NMF mixture fractions).
 
   - `sparc_rar_nmf_baseline_comp3_galaxies_full_diagnostics.csv` and  
     `sparc_rar_nmf_baseline_comp3_with_table1.csv`  
@@ -118,7 +120,7 @@ Derived tables, summaries, and figures from the robustness experiment:
 - **Configuration-level robustness and LaTeX tables**
 
   - `sparc_rar_nmf_comp3_config_summary.csv`  
-    Per-configuration summary of how many galaxies fall into `comp3_dom`, their group-level \(g^\dagger\) range, and non-overlap flags vs other groups.
+    Per-configuration summary of how many galaxies fall into `comp3_dom`, their group-level `g_dagger` range, and non-overlap flags vs other groups.
 
   - `sparc_rar_nmf_baseline_groups_table.tex`  
     LaTeX table summarizing RAR parameters and mean metadata for each group in the baseline configuration.
@@ -132,7 +134,7 @@ Derived tables, summaries, and figures from the robustness experiment:
     Narrative overview of the dataset, RAR model, NMF setup, and global results, including approximate values for the global RAR and group-level acceleration scales.
 
   - `sparc_rar_nmf_comp3_nonoverlap_summary.txt`  
-    Short text summary reporting how often the low-acceleration subgroup (`comp3_dom`) has non-overlapping 1σ intervals in \(g^\dagger\) compared to other groups across the scanned configurations.
+    Short text summary reporting how often the low-acceleration subgroup (`comp3_dom`) has non-overlapping 1σ intervals in `g_dagger` compared to other groups across the scanned configurations.
 
 - **Figures**
 
@@ -175,8 +177,8 @@ For detailed execution instructions and recommended workflows, see `README/READM
 The artifact is focused on:
 
 - deriving galaxy-scale baryonic and observed radial accelerations (`g_bar` and `g_obs`) from SPARC rotation curves,  
-- fitting an empirical RAR model globally and within NMF-defined sub-populations of galaxies,
-- scanning a grid of NMF configurations and group-definition thresholds,
+- fitting an empirical RAR model globally and within NMF-defined sub-populations of galaxies,  
+- scanning a grid of NMF configurations and group-definition thresholds,  
 - quantifying how often a small subgroup with a distinct RAR acceleration scale appears and how robust this subgroup is across configurations.
 
 The artifact is intended for transparency and reproducibility of this specific experiment; it is not a general-purpose SPARC analysis library.
